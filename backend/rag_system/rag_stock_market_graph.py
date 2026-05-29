@@ -1,10 +1,10 @@
 from langgraph.graph import END, StateGraph, START
 from typing import List
 from typing_extensions import TypedDict
-import backend.rag_system.rag_nodes as nodes
-import backend.rag_system.rag_components.llm_doc_grader as doc_grader_agent
-import backend.rag_system.rag_components.llm_question_rewriter as llm_question_rewriter
-import backend.rag_system.web_search_tool as web_search
+import rag_nodes as nodes
+import rag_components.llm_doc_grader as doc_grader_agent
+import rag_components.llm_question_rewriter as llm_question_rewriter
+import web_search_tool as web_search
 from langchain_core.documents import Document
 
 retriever = nodes.create_index()

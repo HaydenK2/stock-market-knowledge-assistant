@@ -1,4 +1,4 @@
-from backend.rag_system.rag_env import set_env_variables
+from rag_env import set_env_variables
 
 
 set_env_variables()
@@ -25,7 +25,7 @@ def load_docs():
         returns all docs in raw_docs directory as a list
     """
     loader = DirectoryLoader(
-        "./data/raw_docs/",
+        "../data/raw_docs/",
         glob="**/*.md",
         loader_cls=TextLoader,
         loader_kwargs={'encoding': 'utf-8'}

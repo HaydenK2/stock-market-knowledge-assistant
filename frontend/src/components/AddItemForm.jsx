@@ -17,9 +17,9 @@ const AddItemForm = ({ addItem }) => {
         type="text"
         value={itemName}
         onChange={(e) => setItemName(e.target.value)}
-        placeholder="Enter item name"
+        placeholder="Enter Your Stock Market Question Here"
       />
-      <button type="submit">Add item</button>
+      <button type="submit">Submit Question</button>
     </form>
   );
 };

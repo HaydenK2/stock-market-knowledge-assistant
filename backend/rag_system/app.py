@@ -1,9 +1,7 @@
-from backend.rag_system.rag_stock_market_graph import build_graph
+from rag_stock_market_graph import build_graph
 from pprint import pprint
 
-
 app = build_graph()
-
 
 # Run
 def run_rag(question):
@@ -17,9 +15,11 @@ def run_rag(question):
         pprint("\n---\n")
 
     # Final generation
-    pprint(value["generation"])
+    output = value["generation"]
+    # pprint(output)
+    return output
 
 
-# run_rag("What is the current state of the stock market?")
+# run_rag("What is the current state of the stock market?") 
 
 run_rag("What are some basic terms I should know about the stock market? Give a brief definition of each term and explain why it's important")
