@@ -17,7 +17,6 @@ class Settings(BaseSettings):
     TAVILY_API_KEY: str
     OPENAI_API_KEY: str
 
-
     @field_validator("ALLOWED_ORIGINS")
     def parse_allowed_origins(cls, v: str) -> list[str]:
         return v.split(",") if v else []

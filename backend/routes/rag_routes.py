@@ -20,8 +20,7 @@ class QAResponse(BaseModel):
 async def ask_question(request: QuestionRequest):
     try:
         # 1. Run RAG model
-        # answer = await run_rag(request.question)
-        answer = "temp"
+        answer = await run_rag(request.question)
 
         # 2. Build document to store
         qa_document = {
@@ -35,8 +34,8 @@ async def ask_question(request: QuestionRequest):
         result = await qa_collection.insert_one(qa_document)
 
         return {
-            "question": request.question,
-            "answer": answer,
+            "question": qa_document["question"],
+            "answer": qa_document["answer"],
             "timestamp": qa_document["timestamp"]
         }
 

@@ -143,7 +143,10 @@ def build_graph():
 
         # Web search
         docs = web_search_tool.invoke({"query": question})
-        web_results = "\n".join([d["content"] for d in docs])
+        web_results = "\n".join(
+            d["content"] if isinstance(d, dict) and "content" in d else str(d)
+            for d in docs
+        )
         web_results = Document(page_content=web_results)
         documents.append(web_results)
 

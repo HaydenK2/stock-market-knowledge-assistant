@@ -1,0 +1,66 @@
+.form-container {
+    display: flex;
+}
+
+.submit-form-components {
+    padding: 0 14px;
+    background: rgb(57, 57, 57);
+    width: 100%;
+    max-width: 1000px;
+    height: 60px;
+    border-radius: 50px;
+    box-sizing: border-box;
+
+}
+
+.submit-form-components form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+/*https://fonts.google.com/selection/embed */
+.submit-form-components input {
+  flex: 1 1 0;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: white;
+  padding: 20px 14px;
+  border-radius: 999px;
+  box-sizing: border-box;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100; 
+}
+
+
+.submit-form-components input:focus {
+  outline: none;
+}
+
+
+.submit-form-components button {
+    margin-right: 5px;
+  flex: 0 0 auto;
+  padding: 10px 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  background: #0f69ff;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.submit-form-components button:hover {
+  background: #0c58d6;
+}
