@@ -1,10 +1,10 @@
 from langgraph.graph import END, StateGraph, START
 from typing import List
 from typing_extensions import TypedDict
-import backend.rag_system.rag_nodes as nodes
-import backend.rag_system.rag_components.llm_doc_grader as doc_grader_agent
-import backend.rag_system.rag_components.llm_question_rewriter as llm_question_rewriter
-import backend.rag_system.web_search_tool as web_search
+from . import rag_nodes as nodes
+from .rag_components import llm_doc_grader as doc_grader_agent
+from .rag_components import llm_question_rewriter as llm_question_rewriter
+from . import web_search_tool as web_search
 from langchain_core.documents import Document
 
 retriever = nodes.create_index()
@@ -143,7 +143,10 @@ def build_graph():
 
         # Web search
         docs = web_search_tool.invoke({"query": question})
-        web_results = "\n".join([d["content"] for d in docs])
+        web_results = "\n".join(
+            d["content"] if isinstance(d, dict) and "content" in d else str(d)
+            for d in docs
+        )
         web_results = Document(page_content=web_results)
         documents.append(web_results)
 

@@ -1,5 +1,5 @@
-from backend.rag_system.rag_env import set_env_variables
-
+from .rag_env import set_env_variables
+from pathlib import Path
 
 set_env_variables()
 
@@ -19,16 +19,21 @@ from operator import itemgetter
 #   Start vm
 # .\.venv\Scripts\Activate.ps1 
 
+
+
 # Node 1: create_index
 def load_docs():
     """
         returns all docs in raw_docs directory as a list
     """
+
+    DATA_DIR = Path(__file__).resolve().parents[1] / "data" / "raw_docs"
+
     loader = DirectoryLoader(
-        "./data/raw_docs/",
+        str(DATA_DIR),
         glob="**/*.md",
         loader_cls=TextLoader,
-        loader_kwargs={'encoding': 'utf-8'}
+        loader_kwargs={"encoding": "utf-8"},
     )
 
     docs = loader.load()
