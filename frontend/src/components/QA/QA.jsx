@@ -15,7 +15,7 @@ const QASection = () => {
     console.log("geneate answer from ", my_question)
     try {
       const response = await api.post('/api/rag/ask', { question: my_question });
-      setAnswer(response.data.answer);
+      setAnswer(response.data.final_answer);
     } catch (error) {
       console.error("error generating question ", error)
       setAnswer("Sorry, could not generate an answer.");

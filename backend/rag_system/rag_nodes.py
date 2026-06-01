@@ -1,5 +1,6 @@
 from .rag_env import set_env_variables
 from pathlib import Path
+import bm25s
 
 set_env_variables()
 
@@ -59,13 +60,9 @@ def create_index():
                                         persist_directory="./data/vectorstore/")
     
     retriever = vectorstore.as_retriever()
-
     print("retriever:", type(retriever))
 
-    return retriever
-
-
-
+    return retriever, vectorstore
 
 #
 def format_docs(docs):

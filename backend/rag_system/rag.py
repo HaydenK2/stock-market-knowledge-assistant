@@ -1,7 +1,34 @@
 from .rag_stock_market_graph import build_graph
+from sentence_transformers import CrossEncoder
 from pprint import pprint
 
+cross_encoder = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+
 app = build_graph()
+
+async def retrieve_with_eval_data(query, docs_and_scores):
+    chunk_records = []
+    for rank, (doc, vector_score) in enumerate(docs_and_scores):
+        chunk_records.append({
+            "chunk_id": doc.metadata.get("chunk_id", f"chunk_{rank}"),
+            "content_snippet": doc.page_content[:200],
+            "vector_score": float(vector_score),
+            "retrieval_source": "vector",
+            "final_rank": rank + 1
+        })
+
+    #   call cross_encoder
+    pairs = [[query, r["content_snippet"]] for r in chunk_records]
+    ce_scores = cross_encoder.predict(pairs)
+
+    for i, ce_score in enumerate(ce_scores):
+        chunk_records[i]["cross_encoder_score"] = float(ce_score)
+
+    chunk_records.sort(key=lambda x: x["cross_encoder_score"], reverse=True)
+    for i, chunk in enumerate(chunk_records):
+        chunk["final_rank"] = i + 1
+    
+    return chunk_records
 
 # Run
 async def run_rag(question):
@@ -19,9 +46,16 @@ async def run_rag(question):
     if value is None:
         raise RuntimeError("run_rag did not receive any output from app.stream()")
 
+    
+    print("final gen completed")
+    print(f"DEBUG - State keys: {value.keys()}")  # See what keys are available
+    print(f"DEBUG - docs_and_scores exists: {'docs_and_scores' in value}")
+
     print("final gen completed")
     output = value["generation"]
-    return output
+    chunk_records = await retrieve_with_eval_data(value["question"], value["docs_and_scores"])
+
+    return output, chunk_records
 
 
 # run_rag("What is the current state of the stock market?") 
