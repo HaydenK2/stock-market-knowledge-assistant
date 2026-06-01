@@ -51,7 +51,7 @@ async def ask_question(request: QuestionRequest):
 
         # 3. Save to MongoDB
         result = await qa_collection.insert_one(qa_document)
-
+        
         return {
             "eval_id": qa_document["eval_id"],
             "query": qa_document["query"],

@@ -55,6 +55,8 @@ async def run_rag(question):
     output = value["generation"]
     chunk_records = await retrieve_with_eval_data(value["question"], value["docs_and_scores"])
 
+    #   TODO: add scoring with RAGAs
+
     return output, chunk_records
 
 
