@@ -38,9 +38,7 @@ async def ask_question(request: QuestionRequest):
         # 1. Run RAG model
         final_answer, chunk_records = await run_rag(request.question)
 
-        # 2. Build document to store
-
-        #   build retrieved_chunks
+        # 2.  build retrieved_chunks
         qa_document = {
             "eval_id": str(uuid.uuid4()),
             "timestamp": datetime.now(),
@@ -51,7 +49,7 @@ async def ask_question(request: QuestionRequest):
 
         # 3. Save to MongoDB
         result = await qa_collection.insert_one(qa_document)
-        
+
         return {
             "eval_id": qa_document["eval_id"],
             "query": qa_document["query"],

@@ -20,5 +20,6 @@ def set_env_variables():
     _set_env('LANGCHAIN_API_KEY')
     _set_env('OPENAI_API_KEY')
     _set_env('TAVILY_API_KEY')
+    _set_env('BRAINTRUST_API_KEY')
 
 
