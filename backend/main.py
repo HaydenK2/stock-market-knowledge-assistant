@@ -1,14 +1,19 @@
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from motor.motor_asyncio import AsyncIOMotorClient
-from pydantic import BaseModel
-from typing import List
-from core.config import settings
-from rag_system.rag import run_rag
-from database import qa_collection
-from routes.rag_routes import router as rag_router
+from backend.core.config import settings
+from backend.rag_system.rag import run_rag
+from backend.database import qa_collection
+from backend.routes.rag_routes import router as rag_router
 
 MONGO_URL = settings.DATABASE_URL
 

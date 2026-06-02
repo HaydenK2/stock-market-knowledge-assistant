@@ -1,12 +1,13 @@
 from .rag_env import set_env_variables
 from pathlib import Path
-import bm25s
+import braintrust
+from braintrust import traced
+
 
 set_env_variables()
 
 
 
-import bs4
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter

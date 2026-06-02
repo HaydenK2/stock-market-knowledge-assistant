@@ -2,8 +2,8 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from datetime import datetime
 import uuid
-from database import qa_collection
-from rag_system.rag import run_rag
+from backend.database import qa_collection
+from backend.rag_system.rag import run_rag
 
 router = APIRouter()
 
