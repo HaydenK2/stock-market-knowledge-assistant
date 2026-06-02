@@ -21,7 +21,6 @@ from operator import itemgetter
 # .\.venv\Scripts\Activate.ps1 
 
 
-
 # Node 1: create_index
 def load_docs():
     """
