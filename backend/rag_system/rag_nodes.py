@@ -3,10 +3,7 @@ from pathlib import Path
 import braintrust
 from braintrust import traced
 
-
 set_env_variables()
-
-
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.document_loaders import DirectoryLoader, TextLoader

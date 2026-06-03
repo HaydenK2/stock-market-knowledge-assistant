@@ -57,7 +57,7 @@ async def run_rag(question):
 
     #   TODO: add scoring with RAGAs
 
-    return output, chunk_records
+    return output, value
 
 
 # run_rag("What is the current state of the stock market?") 

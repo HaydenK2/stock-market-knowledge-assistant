@@ -1,14 +1,6 @@
 dataset = [
     {
-        "input": "What was Apple's stock price in Q3 2023?",
-        "expected": "Apple's stock price in Q3 2023 averaged around $178.",
-    },
-    {
-        "input": "How did the S&P 500 perform in 2022?",
-        "expected": "The S&P 500 declined approximately 19.4% in 2022.",
-    },
-    {
-        "input": "What is a P/E ratio?",
-        "expected": "A P/E ratio (price-to-earnings) measures a company's share price relative to its earnings per share.",
+        "input": "What is a stock?",
+        "expected": "A stock is a security that provides holders a share of ownership in a company. Many investors deal exclusively in common shares, which entitle them to vote in shareholder meetings and receive dividends. Preferred shares are less common but give holders priority for some payments and distributions in exchange for voting rights.",
     },
 ]
