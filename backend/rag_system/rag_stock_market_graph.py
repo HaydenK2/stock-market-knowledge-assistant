@@ -7,7 +7,7 @@ from .rag_components import llm_question_rewriter as llm_question_rewriter
 from . import web_search_tool as web_search
 from langchain_core.documents import Document
 
-retriever = nodes.create_index()
+retriever, vectorstore = nodes.create_index()
 retrieval_grader = doc_grader_agent.create_structured_llm_grader()
 question_rewriter = llm_question_rewriter.create_question_rewriter()
 web_search_tool = web_search.create_web_search_tool()
@@ -28,6 +28,7 @@ class GraphState(TypedDict):
     generation: str
     web_search: str
     documents: List[str]
+    docs_and_scores: List[tuple]
 
 def build_graph():
     def retrieve(state):
@@ -46,7 +47,9 @@ def build_graph():
 
         # Retrieval
         documents = retriever.invoke(question)
-        return {"documents": documents, "question": question}
+        docs_and_scores = vectorstore.similarity_search_with_score(question, k=10)
+
+        return {"documents": documents, "question": question, "docs_and_scores": docs_and_scores}
 
 
     def generate(state):
@@ -66,7 +69,8 @@ def build_graph():
 
         #   RAG generation
         generation = rag_chain.invoke({"context": documents, "question": question})
-        return {"documents": documents, "question": question, "generation": generation}
+        return {"documents": documents, "question": question, "generation": generation, "docs_and_scores": state.get("docs_and_scores", [])  # Pass through
+}
 
 
 
@@ -85,6 +89,7 @@ def build_graph():
         print("---CHECK DOCUMENT RELEVANCE TO QUESTION---")
         question = state["question"]
         documents = state["documents"]
+        docs_and_scores = state["docs_and_scores"]
 
         filtered_docs = []
         web_search = "No"
@@ -104,7 +109,7 @@ def build_graph():
                 web_search = "Yes"
                 continue
         
-        return {"documents": filtered_docs, "question": question, "web_search": web_search}
+        return {"documents": filtered_docs, "question": question, "web_search": web_search, "docs_and_scores": docs_and_scores}
 
 
     def transform_query(state):
@@ -121,10 +126,10 @@ def build_graph():
         print("---TRANSFORM QUERY---")
         question = state["question"]
         documents = state["documents"]
-
+        docs_and_scores = state["docs_and_scores"]
         # Re-write question
         better_question = question_rewriter.invoke({"question": question})
-        return {"documents": documents, "question": better_question}
+        return {"documents": documents, "question": better_question, "docs_and_scores": docs_and_scores}
 
     def web_search(state):
         """
@@ -140,6 +145,7 @@ def build_graph():
         print("---WEB SEARCH---")
         question = state["question"]
         documents = state["documents"]
+        docs_and_scores = state["docs_and_scores"]
 
         # Web search
         docs = web_search_tool.invoke({"query": question})
@@ -150,7 +156,7 @@ def build_graph():
         web_results = Document(page_content=web_results)
         documents.append(web_results)
 
-        return {"documents": documents, "question": question}
+        return {"documents": documents, "question": question, "docs_and_scores": docs_and_scores}
 
     ### Edges
     def decide_to_generate(state):

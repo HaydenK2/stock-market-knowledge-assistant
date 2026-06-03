@@ -1,11 +1,10 @@
 from .rag_env import set_env_variables
 from pathlib import Path
+import braintrust
+from braintrust import traced
 
 set_env_variables()
 
-
-
-import bs4
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -18,7 +17,6 @@ from operator import itemgetter
 
 #   Start vm
 # .\.venv\Scripts\Activate.ps1 
-
 
 
 # Node 1: create_index
@@ -59,13 +57,9 @@ def create_index():
                                         persist_directory="./data/vectorstore/")
     
     retriever = vectorstore.as_retriever()
-
     print("retriever:", type(retriever))
 
-    return retriever
-
-
-
+    return retriever, vectorstore
 
 #
 def format_docs(docs):

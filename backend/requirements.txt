@@ -18,3 +18,4 @@ tavily-python
 pydantic
 fastapi
 uvicorn
+"bm25s[core]"

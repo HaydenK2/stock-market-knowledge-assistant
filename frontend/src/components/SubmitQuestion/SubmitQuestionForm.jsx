@@ -21,7 +21,7 @@ const SubmitQuestionForm = ({ generateAnswer }) => {
             type="text"
             value={questionName}
             onChange={(e) => setQuestionName(e.target.value)}
-            placeholder="Enter Your Question Here"
+            placeholder="Ask Raggy Here!"
           />
           <button type="submit"> ^ </button>
         </form>
