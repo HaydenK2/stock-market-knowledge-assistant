@@ -165,7 +165,7 @@ Cons:
 - DCA can be difficult to automate if you are not familiar with your broker's platform
 - During periods of declining prices, your average cost basis will decrease, increasing your future tax liability
 - You must have steady, stable cash flow to invest
-- Investments—even automated ones—should be reviewed periodically
+- Investmentsï¿½even automated onesï¿½should be reviewed periodically
 
 ### Who benefits from dollar-cost averaging?
 DCA is a wise choice for most investors. It keeps you committed to saving while reducing the level of risk and the effects of volatility. Most investors are not in a position to make a single, large investment. A DCA approach is an effective countermeasure to cognitive bias inherent to humans. New and experienced investors alike are susceptible to hard-wired flaws in judgment.
