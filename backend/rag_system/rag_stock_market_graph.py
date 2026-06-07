@@ -95,15 +95,15 @@ def build_graph():
         web_search = "No"
 
         #   score each doc
-        for d in documents:
+        for doc in documents:
             score = retrieval_grader.invoke(
-                {"question": question, "document": d.page_content}
+                {"question": question, "document": doc.page_content}
             )
 
             grade = score.binary_score
             if grade == "yes":
                 print("---GRADE: DOCUMENT RELEVANT---")
-                filtered_docs.append(d)
+                filtered_docs.append(doc)
             else:
                 print("---GRADE: DOCUMENT NOT RELEVANT---")
                 web_search = "Yes"
