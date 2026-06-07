@@ -26,9 +26,9 @@ class QAResponse(BaseModel):
     query: str
     retrieved_chunks: list
     final_answer: str
-    # answer_grounded: bool
-    # grounding_score: float
-    # latency_ms: float
+    answer_grounded: bool
+    grounding_score: float
+    latency_ms: float
         
 
 
