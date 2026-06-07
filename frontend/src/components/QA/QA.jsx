@@ -38,6 +38,7 @@ const QASection = () => {
     console.log("geneate answer from ", my_question)
     try {
       const response = await api.post('/api/rag/ask', { question: my_question });
+      console.log("got the thing!")
       setVisible(true)
       setAnswer(response.data.final_answer); // Triggers typing effect
 

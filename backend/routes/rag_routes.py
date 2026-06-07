@@ -23,7 +23,7 @@ class QAResponse(BaseModel):
     eval_id: str
     timestamp: datetime
     query: str
-    retrieved_chunks: list[RetrievedChunk]
+    retrieved_chunks: list
     final_answer: str
     answer_grounded: bool
     grounding_score: float
@@ -35,21 +35,31 @@ class QAResponse(BaseModel):
 @router.post("/ask", response_model=QAResponse)
 async def ask_question(request: QuestionRequest):
     try:
+
+        print('get final_answer')
+
         # 1. Run RAG model
-        final_answer, chunk_records = await run_rag(request.question)
+        final_answer, result = await run_rag(request.question)
+
+        # print(final_answer)
+        documents = result["documents"]
 
         # 2.  build retrieved_chunks
         qa_document = {
             "eval_id": str(uuid.uuid4()),
             "timestamp": datetime.now(),
             "query": request.question,
-            "retrieved_chunks": chunk_records,
+            "retrieved_chunks": documents,
             "final_answer": final_answer,
         }
 
-        # 3. Save to MongoDB
-        result = await qa_collection.insert_one(qa_document)
+        print("mongo insert")
 
+
+        # 3. Save to MongoDB
+        # result = await qa_collection.insert_one(qa_document)
+
+        print("mongo saved")
         return {
             "eval_id": qa_document["eval_id"],
             "query": qa_document["query"],
@@ -59,7 +69,6 @@ async def ask_question(request: QuestionRequest):
             "answer_grounded": True,
             "grounding_score": 1.0,
             "latency_ms": -1.0
-            
         }
 
     except Exception as e:
