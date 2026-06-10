@@ -20,10 +20,12 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Create virtual environment and install dependencies
         run: |
           cd backend
-          pip install -r ../requirements.txt  # ← requirements.txt is in root
+          python -m venv venv              
+          source venv/bin/activate         
+          pip install -r ../requirements.txt 
 
       - name: Zip backend only
         run: |
