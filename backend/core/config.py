@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     ALLOWED_ORIGINS: str = ""
     ALLOWED_ORIGINS_DEV: str = ""
-
+    VITE_API_URL: str = ""
     USER_AGENT: str = ""
     LANGCHAIN_TRACING_V2: str = "true"
     LANGCHAIN_ENDPOINT: str
