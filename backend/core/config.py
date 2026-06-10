@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     DATABASE_URL: str
 
     ALLOWED_ORIGINS: str = ""
+    ALLOWED_ORIGINS_DEV: str = ""
 
     USER_AGENT: str = ""
     LANGCHAIN_TRACING_V2: str = "true"
