@@ -11,8 +11,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from motor.motor_asyncio import AsyncIOMotorClient
 from backend.core.config import settings
-from backend.rag_system.rag import run_rag
-from backend.database import qa_collection
 from backend.routes.rag_routes import router as rag_router
 
 MONGO_URL = settings.DATABASE_URL
