@@ -77,23 +77,3 @@ async def ask_question(request: QuestionRequest):
     except Exception as e:
         traceback.print_exc()  # prints full traceback to terminal
         raise HTTPException(status_code=500, detail=str(e))
-
-# Get all past Q&A history
-@router.get("/history")
-async def get_history(user_id: str | None = None):
-    query = {"user_id": user_id} if user_id else {}
-    history = []
-    async for doc in qa_collection.find(query).sort("timestamp", -1):
-        doc["_id"] = str(doc["_id"])
-        history.append(doc)
-    return history
-
-# Get a single past answer by ID
-@router.get("/history/{qa_id}")
-async def get_qa(qa_id: str):
-    from bson import ObjectId
-    doc = await qa_collection.find_one({"_id": ObjectId(qa_id)})
-    if not doc:
-        raise HTTPException(status_code=404, detail="Not found")
-    doc["_id"] = str(doc["_id"])
-    return doc
