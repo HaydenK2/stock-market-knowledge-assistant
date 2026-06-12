@@ -1,6 +1,7 @@
 from .rag_env import set_env_variables
 from pathlib import Path
 import braintrust
+import os
 from braintrust import traced
 
 set_env_variables()
@@ -39,26 +40,37 @@ def load_docs():
     return docs
 
 def create_index():
-    """
-        indexing
-    """
-    docs = load_docs()
+    persist_directory = "./data/vectorstore/"
 
-    print(f"Loaded {len(docs)} documents")
+    # ✅ Load existing vectorstore if it exists
+    if os.path.exists(persist_directory):
+        print("Loading existing vectorstore...")
+        vectorstore = Chroma(
+            collection_name="stock_market_rag",
+            embedding_function=OpenAIEmbeddings(),
+            persist_directory=persist_directory
+        )
+    else:
+        # 🔨 Build from scratch only if it doesn't exist
+        print("Building vectorstore from scratch...")
+        docs = load_docs()
+        print(f"Loaded {len(docs)} documents")
 
-    splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=75)
+        splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=75)
+        chunks = splitter.split_documents(docs)
 
-    chunks = splitter.split_documents(docs)
+        # ✅ Filter out None/empty chunks before indexing
+        chunks = [c for c in chunks if c.page_content and c.page_content.strip() != ""]
 
-    # embed
-    vectorstore = Chroma.from_documents(documents=chunks,
-                                        embedding=OpenAIEmbeddings(),
-                                        collection_name="stock_market_rag",
-                                        persist_directory="./data/vectorstore/")
-    
+        vectorstore = Chroma.from_documents(
+            documents=chunks,
+            embedding=OpenAIEmbeddings(),
+            collection_name="stock_market_rag",
+            persist_directory=persist_directory
+        )
+
     retriever = vectorstore.as_retriever()
     print("retriever:", type(retriever))
-
     return retriever, vectorstore
 
 #

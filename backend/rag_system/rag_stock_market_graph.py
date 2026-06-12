@@ -7,6 +7,10 @@ from .rag_components import llm_question_rewriter as llm_question_rewriter
 from . import web_search_tool as web_search
 from langchain_core.documents import Document
 
+retrieval_grader = doc_grader_agent.create_structured_llm_grader()
+question_rewriter = llm_question_rewriter.create_question_rewriter()
+web_search_tool = web_search.create_web_search_tool()
+rag_chain = nodes.create_rag_chain()
 
 class GraphState(TypedDict):
     """
@@ -28,10 +32,7 @@ class GraphState(TypedDict):
 def build_graph():
 
     retriever, vectorstore = nodes.create_index()
-    retrieval_grader = doc_grader_agent.create_structured_llm_grader()
-    question_rewriter = llm_question_rewriter.create_question_rewriter()
-    web_search_tool = web_search.create_web_search_tool()
-    rag_chain = nodes.create_rag_chain()
+
 
     def retrieve(state):
         """

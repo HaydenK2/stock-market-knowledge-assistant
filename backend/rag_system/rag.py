@@ -48,7 +48,7 @@ async def run_rag(question):
     def run_stream():
         result = None
         for output in get_app().stream(inputs):
-            for key, value in output.items():
+            for key, result in output.items():
                 # Node
                 pprint(f"Node '{key}':")
                 # Optional: print full state at each node
