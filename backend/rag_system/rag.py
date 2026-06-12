@@ -4,11 +4,18 @@ from pprint import pprint
 import asyncio
 from functools import partial
 
-cross_encoder = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
 
-app = build_graph()
+def get_app():
+    global _app
+    if _app is None:
+        _app = build_graph()
+    return _app
+
+_app = None
 
 async def retrieve_with_eval_data(query, docs_and_scores):
+    cross_encoder = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+
     chunk_records = []
     for rank, (doc, vector_score) in enumerate(docs_and_scores):
         chunk_records.append({
@@ -40,7 +47,7 @@ async def run_rag(question):
 
     def run_stream():
         result = None
-        for output in app.stream(inputs):
+        for output in get_app().stream(inputs):
             for key, value in output.items():
                 # Node
                 pprint(f"Node '{key}':")
@@ -48,6 +55,8 @@ async def run_rag(question):
                 # pprint.pprint(value["keys"], indent=2, width=80, depth=None)
             pprint("\n---\n")
         return result
+    
+    
     
     loop = asyncio.get_event_loop()
     value = await loop.run_in_executor(None, run_stream)
@@ -63,8 +72,6 @@ async def run_rag(question):
     # print("final gen completed")
     output = value["generation"]
     # chunk_records = await retrieve_with_eval_data(value["question"], value["docs_and_scores"])
-
-    #   TODO: add scoring with RAGAs
 
     return output, value
 
