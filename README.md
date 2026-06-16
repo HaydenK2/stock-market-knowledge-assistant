@@ -3,12 +3,19 @@ Welcome to Raggy! Want to start investing, but don't know where to begin? Raggy 
 
 This repository contains the frontend of Raggy. 
 To see Raggy's backend, click [HERE](https://github.com/HaydenK2/stock-market-assistant-backend)
+
 # Components
 ## 1. React Frontend
 Raggy is built ontop of a React frontend for user friendly access. Simply type in what you want to ask Raggy. Within a couple seconds, Raggy will generate an answer to help you out!
 
 ## 2. Axios FastAPI
 We utilze axios to so Raggy can communicate with its FastAPI. The backend will generate the answer using its RAG system and send the answer to the frontend
+
+
+# How to access?
+Raggy is deployed onto the Azure Cloud! You can access the application via the following link:
+
+https://purple-river-0eabda210.7.azurestaticapps.net/
 
 #   Getting Started Locally
 1. After you clone the repository, create a virtual environment to run the frontend
@@ -34,3 +41,6 @@ npm run dev
 ```
 5. Click on the url link to view the frontend
 - Make sure the backend is running as well before you ask Raggy!
+
+
+Self Note: Ensure MongoDB is proper setup before asking hosted Azure version of Raggy
