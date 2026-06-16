@@ -32,5 +32,5 @@ pip install -r requirements.txt
 cd frontend
 npm run dev
 ```
-4. Click on the url link to view the frontend
+5. Click on the url link to view the frontend
 - Make sure the backend is running as well before you ask Raggy!
