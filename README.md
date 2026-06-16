@@ -1,4 +1,4 @@
-# stock-market-knowledge-assistant
+# Stock Market Knowledge Assistant Frontend
 Welcome to Raggy! Want to start investing, but don't know where to begin? Raggy is a stock market knowledge assistant who can help you become familar with foundational stock market terminology and provide investing strategies you can start implementing now!
 
 This repository contains the frontend of Raggy. 
